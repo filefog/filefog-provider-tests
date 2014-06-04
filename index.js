@@ -43,7 +43,9 @@ module.exports = function(options) {
     test.globals([Provider,Configuration,Credentials]);
     test.files = files;
 
-    test.run(function(err) {
-        process.exit(0);
+    test.run(function(failures){
+        process.on('exit', function () {
+            process.exit(failures);
+        });
     });
 };
