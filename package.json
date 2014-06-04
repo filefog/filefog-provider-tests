@@ -1,0 +1,14 @@
+{
+    "name": "filefog-provider-tests",
+    "version": "0.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {},
+    "author": "Jason Kulatunga",
+    "license": "MIT",
+    "dependencies": {
+        "mocha": "^1.20.0",
+        "should": "^4.0.0",
+        "sinon": "^1.10.1"
+    }
+}
