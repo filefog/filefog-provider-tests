@@ -1,16 +1,16 @@
 var should = require('should')
 
-describe('Base Interface', function() {
+describe('Base Definition', function() {
 
     /////////////////////////////////////////////////////
     // TEST METHODS
     ////////////////////////////////////////////////////
 
     it('should export the required base functionality', function() {
-        Provider.provider.should.be.a.Function;
-        Provider.provider.prototype.interfaces.should.be.an.Array;
-        Provider.client.should.be.a.Object;
-        Provider.transform.should.be.a.Object;
+        Definition.provider.should.be.a.Function;
+        Definition.provider.prototype.interfaces.should.be.an.Array;
+        Definition.client.should.be.a.Function;
+        Definition.transform.should.be.a.Object;
     });
 
 });

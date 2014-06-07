@@ -1,33 +1,39 @@
 var should = require('should')
-
+var util = require('util')
 describe('Provider OAuth Interface', function() {
 
-    it('should raise an error with invalid configuration', function(){
-        should(function(){Provider.provider()}).throw
-    })
-
     describe('With valid configuration', function() {
+        var providerConstructor;
         var providerInstance;
         before(function(){
-            var ProviderConstructor = Provider.provider;
-            providerInstance = new ProviderConstructor(Configuration);
+            providerConstructor = Definition.provider;
+
+            var Wrapper = function(){
+                this.config = Configuration;
+                providerConstructor.call(this);
+
+            }
+            util.inherits(Wrapper, providerConstructor);
+
+            providerInstance = new Wrapper();
         })
 
+
         it('should have a #oAuthGetAuthorizeUrl() method', function() {
-            providerInstance.oAuthGetAuthorizeUrl.should.be.a.Function;
+            providerConstructor.prototype.oAuthGetAuthorizeUrl.should.be.a.Function;
         });
 
         it('should have a #oAuthGetAccessToken() method', function() {
-            providerInstance.oAuthGetAccessToken.should.be.a.Function;
+            providerConstructor.prototype.oAuthGetAccessToken.should.be.a.Function;
         });
 
         it('should have a #oAuthRefreshAccessToken() method', function() {
-            providerInstance.oAuthRefreshAccessToken.should.be.a.Function;
+            providerConstructor.prototype.oAuthRefreshAccessToken.should.be.a.Function;
         });
 
         describe('#oAuthGetAuthorizeUrl()', function() {
             it('should return an authorization url', function(){
-                providerInstance.oAuthGetAuthorizeUrl().should.be.a.String;
+                providerConstructor.prototype.oAuthGetAuthorizeUrl.should.be.a.Function;
             })
         })
     })
