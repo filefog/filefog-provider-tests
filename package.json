@@ -1,15 +1,31 @@
 {
-  "name": "filefog-provider-tests",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "author": "Jason Kulatunga",
-  "license": "MIT",
-  "dependencies": {
-    "mocha": "^1.20.0",
-    "should": "^4.0.0",
-    "sinon": "^1.10.1"
-  },
-  "devDependencies": {}
+    "name": "filefog-provider-tests",
+    "version": "0.0.2",
+    "description": "integration tests for filefog providers",
+    "author": "Jason Kulatunga <jason@thesparktree.com>",
+    "main": "index.js",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "mocha": "^1.20.0",
+        "should": "^4.0.0",
+        "sinon": "^1.10.1"
+    },
+    "keywords": [
+        "orm",
+        "tests",
+        "filefog",
+        "provider",
+        "wrapper",
+        "google drive",
+        "drive",
+        "google",
+        "dropbox",
+        "box.net",
+        "onedrive",
+        "skydrive"
+    ],
+    "repository": "git://github.com/filefog/filefog-provider-tests.git",
+    "homepage": "http://github.com/filefog/filefog-provider-tests",
+    "devDependencies": {}
 }
