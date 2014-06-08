@@ -1,31 +1,34 @@
 {
-  "name": "filefog-provider-tests",
-  "version": "0.0.3",
-  "description": "integration tests for filefog providers",
-  "author": "Jason Kulatunga <jason@thesparktree.com>",
-  "main": "index.js",
-  "scripts": {},
-  "license": "MIT",
-  "dependencies": {
-    "mocha": "^1.20.0",
-    "should": "^4.0.0",
-    "sinon": "^1.10.1"
-  },
-  "keywords": [
-    "orm",
-    "tests",
-    "filefog",
-    "provider",
-    "wrapper",
-    "google drive",
-    "drive",
-    "google",
-    "dropbox",
-    "box.net",
-    "onedrive",
-    "skydrive"
-  ],
-  "repository": "git://github.com/filefog/filefog-provider-tests.git",
-  "homepage": "http://github.com/filefog/filefog-provider-tests",
-  "devDependencies": {}
+    "name": "filefog-provider-tests",
+    "version": "0.0.3",
+    "description": "integration tests for filefog providers",
+    "author": "Jason Kulatunga <jason@thesparktree.com>",
+    "main": "index.js",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "mocha": "^1.20.0",
+        "should": "^4.0.0",
+        "sinon": "^1.10.1",
+        "request": "^2.36.0",
+        "q": "^1.0.1",
+        "filefog" : "*"
+    },
+    "keywords": [
+        "orm",
+        "tests",
+        "filefog",
+        "provider",
+        "wrapper",
+        "google drive",
+        "drive",
+        "google",
+        "dropbox",
+        "box.net",
+        "onedrive",
+        "skydrive"
+    ],
+    "repository": "git://github.com/filefog/filefog-provider-tests.git",
+    "homepage": "http://github.com/filefog/filefog-provider-tests",
+    "devDependencies": {}
 }

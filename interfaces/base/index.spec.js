@@ -11,6 +11,7 @@ describe('Base Definition', function() {
         Definition.provider.prototype.interfaces.should.be.an.Array;
         Definition.client.should.be.a.Function;
         Definition.transform.should.be.a.Object;
+        Definition.config.should.be.a.Object;
     });
 
 });

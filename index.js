@@ -16,7 +16,7 @@ var Path = require('path'),
 module.exports = function(options) {
 
     if(!options.definition) throw new Error('Must supply a provider definition');
-
+    this.name = options.name;
     this.definition = options.definition;
     this.config = options.config || {};
     this.credentials = options.credentials || {};
@@ -30,6 +30,7 @@ module.exports = function(options) {
 
 
     // Globalize Adapter
+    global.Name = this.name;
     global.Definition = this.definition;
     global.Configuration = this.config;
     global.Credentials = this.credentials;
@@ -58,7 +59,7 @@ module.exports = function(options) {
         test.addFile(file_path);
     })
     // Allow Provider to be a global without warning about a leak
-    test.globals([Definition,Configuration,Credentials]);
+    test.globals([Definition,Configuration,Credentials,Name]);
 
     test.run(function(failures){
         process.on('exit', function () {
