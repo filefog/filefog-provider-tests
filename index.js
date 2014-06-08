@@ -50,8 +50,7 @@ module.exports = function(options) {
     // Build a Mocha Runner
     var test = new mocha({
         timeout: 6000,
-        ui: 'tdd',
-        reporter: 'list'
+        reporter: 'dot'
     });
 
     //add files
