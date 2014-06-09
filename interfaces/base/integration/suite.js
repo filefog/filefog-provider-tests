@@ -2,8 +2,8 @@ var should = require('should');
 var utils = require('../../../utils');
 var FileFog = require('filefog');
 
-describe('Integration Testing', function () {
-    describe('create Client', function() {
+describe('During Integration testing', function () {
+    describe('after creating auth client', function() {
         var is_oauth = false;
         var authClient;
         before(function (done) {
@@ -31,7 +31,7 @@ describe('Integration Testing', function () {
                 .then(done, done);
         })
 
-        describe('File Methods', function () {
+        describe('file methods', function () {
             var testFileName = null;
             var testFileContent = "this is test content";
             var testFileIdentifier = null;
@@ -74,7 +74,7 @@ describe('Integration Testing', function () {
             })
         })
 
-        describe('Folder Methods', function () {
+        describe('folder methods', function () {
             var testFolderName = null;
             var testFolderIdentifier;
             before(function () {
@@ -132,7 +132,7 @@ describe('Integration Testing', function () {
 
         })
 
-        describe('Account Methods', function (done) {
+        describe('account methods', function (done) {
 
             it('should access account info', function () {
                 authClient.accountInfo().then(function (response) {
