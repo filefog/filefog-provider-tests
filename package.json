@@ -1,15 +1,15 @@
 {
   "name": "filefog-provider-tests",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "integration tests for filefog providers",
   "author": "Jason Kulatunga <jason@thesparktree.com>",
   "main": "index.js",
   "scripts": {},
   "license": "MIT",
   "dependencies": {
-    "mocha": "^1.20.0",
-    "should": "^4.0.0",
-    "sinon": "^1.10.1",
+    "mocha": "^1.20.1",
+    "should": "^4.0.1",
+    "sinon": "^1.10.2",
     "request": "^2.36.0",
     "q": "^1.0.1",
     "filefog": "*"

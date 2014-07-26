@@ -10,6 +10,11 @@ describe('Client Definition', function() {
         before(function(){
             clientConstructor = Definition.client;
 
+            /**
+             * Description
+             * @method Wrapper
+             * @return 
+             */
             var Wrapper = function(){
                 this.config = Configuration;
                 clientConstructor.call(this);

@@ -5,13 +5,12 @@ var fs = require('fs'),
 
 /**
  * File Loader
- *
+ * @method fileLookup
  * @param {String} path
  * @param {String} filter
  * @param {Boolean} recursive
- * @return {Array}
+ * @return files
  */
-
 exports.fileLookup = function fileLookup(path, filter, recursive) {
   var files = [];
 
@@ -40,6 +39,11 @@ exports.fileLookup = function fileLookup(path, filter, recursive) {
   return files;
 };
 
+/**
+ * Description
+ * @method generateOptions
+ * @return ObjectExpression
+ */
 function generateOptions(){
     return {
         url: 'https://api.github.com/gists/' + Credentials._gist,
@@ -51,20 +55,28 @@ function generateOptions(){
     };
 }
 
+/**
+ * Description
+ * @method loadCredentials
+ * @return 
+ */
 exports.loadCredentials = function(){
 
     if(Credentials == null){
-        return q(null);
+        return q({});
     }
     else if(!Credentials._gist){
         return q(Credentials);
     }
     else{
+        if(!process.env.GITHUB_ACCESS_TOKEN){
+            return q.reject(new Error("GITHUB_ACCESS_TOKEN not specified. An access token is required to access credentials stored in a gist."))
+        }
         var deferred = q.defer();
         var options = generateOptions();
         request.get(options, function(err, req, body){
             if (err) return deferred.reject(err);
-            data = JSON.parse(body);
+            var data = JSON.parse(body);
             var cred = JSON.parse(data.files[Name].content);
             return deferred.resolve(cred);
         });
@@ -73,8 +85,13 @@ exports.loadCredentials = function(){
 }
 
 
+/**
+ * Description
+ * @method saveCredentials
+ * @param {} credentials
+ * @return 
+ */
 exports.saveCredentials = function(credentials){
-
     if(Credentials == null){
         return q(null);
     }
@@ -82,6 +99,9 @@ exports.saveCredentials = function(credentials){
         return q(Credentials);
     }
     else{
+        if(!process.env.GITHUB_ACCESS_TOKEN){
+            return q.reject(new Error("GITHUB_ACCESS_TOKEN not specified. An access token is required to access credentials stored in a gist."))
+        }
         var deferred = q.defer();
         var options = generateOptions();
         var body = {"files":{}};
@@ -96,12 +116,22 @@ exports.saveCredentials = function(credentials){
 }
 
 
+/**
+ * Description
+ * @method s4
+ * @return CallExpression
+ */
 function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
         .substring(1);
 }
 
+/**
+ * Description
+ * @method guid
+ * @return BinaryExpression
+ */
 exports.guid = function () {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();

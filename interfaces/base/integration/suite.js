@@ -9,7 +9,7 @@ describe('During Integration testing', function () {
         before(function (done) {
             FileFog.use(Name, Definition, Configuration);
             provider = FileFog.provider(Name);
-            is_oauth = provider.interfaces.indexOf("oauth") != -1;
+            is_oauth = provider.getConfig().interfaces.indexOf("oauth") != -1;
             utils.loadCredentials()
                 .then(function (cred) {
                     if (is_oauth) {

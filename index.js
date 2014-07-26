@@ -8,11 +8,11 @@ var Path = require('path'),
 
 /**
  * Test Runner
- *
- * @param {Object} options
  * @api public
+ * @method exports
+ * @param {Object} options
+ * @return 
  */
-
 module.exports = function(options) {
 
     if(!options.definition) throw new Error('Must supply a provider definition');

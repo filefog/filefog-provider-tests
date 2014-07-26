@@ -8,6 +8,11 @@ describe('Provider OAuth Interface', function() {
         before(function(){
             providerConstructor = Definition.provider;
 
+            /**
+             * Description
+             * @method Wrapper
+             * @return 
+             */
             var Wrapper = function(){
                 this.config = Configuration;
                 providerConstructor.call(this);
