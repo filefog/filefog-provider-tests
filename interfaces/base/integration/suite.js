@@ -17,7 +17,7 @@ describe('During Integration testing', function () {
                             .then(function (new_cred) {
                                 return utils.saveCredentials(new_cred)
                                     .then(function () {
-                                        return FileFog.client(Name, cred)
+                                        return FileFog.client(Name, new_cred)
                                     })
                             })
                     }
@@ -27,6 +27,10 @@ describe('During Integration testing', function () {
                 })
                 .then(function (client) {
                     authClient = client;
+                })
+                .fail(function(err){
+                    console.log(err,err.trace);
+                    throw err;
                 })
                 .then(done, done);
         })
@@ -38,7 +42,6 @@ describe('During Integration testing', function () {
             before(function () {
                 testFileName = 'file_'+utils.guid() + '_test.txt'
             })
-
             it('should successfully Create file in root directory, and return basic file properties.', function (done) {
                 authClient.createFile(testFileName, null, new Buffer(testFileContent))
                     .then(function (response) {

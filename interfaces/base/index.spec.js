@@ -8,10 +8,11 @@ describe('Base Definition', function() {
 
     it('should export the required base functionality', function() {
         Definition.provider.should.be.a.Function;
-        Definition.provider.prototype.interfaces.should.be.an.Array;
         Definition.client.should.be.a.Function;
         Definition.transform.should.be.a.Object;
         Definition.config.should.be.a.Object;
+        Definition.config.interfaces.should.be.an.Array;
+
     });
 
 });
