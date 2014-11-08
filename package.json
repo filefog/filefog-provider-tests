@@ -1,6 +1,6 @@
 {
   "name": "filefog-provider-tests",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "integration tests for filefog providers",
   "author": "Jason Kulatunga <jason@thesparktree.com>",
   "main": "index.js",
