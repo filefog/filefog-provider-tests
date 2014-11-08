@@ -10,20 +10,13 @@ describe('During Integration testing', function () {
             FileFog.use(Name, Definition, Configuration);
             provider = FileFog.provider(Name);
             is_oauth = provider.getConfig().interfaces.indexOf("oauth") != -1;
-            console.log("before!")
             utils.loadCredentials()
                 .then(function (cred) {
-                    console.log("load credentials", cred)
-
                     if (is_oauth) {
-                        console.log("is oauth")
-
                         return provider.oAuthRefreshAccessToken(cred)
                             .then(function (new_cred) {
-                                    console.log("GOT refresh token",new_cred)
                                 return utils.saveCredentials(new_cred)
                                     .then(function () {
-                                        console.log("Saved credentails")
                                         return FileFog.client(Name, new_cred)
                                     })
                             })
@@ -33,7 +26,6 @@ describe('During Integration testing', function () {
                     }
                 })
                 .then(function (client) {
-                    console.log("then client",client)
                     authClient = client;
                 })
                 .fail(function(err){
