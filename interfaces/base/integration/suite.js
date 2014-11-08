@@ -10,13 +10,20 @@ describe('During Integration testing', function () {
             FileFog.use(Name, Definition, Configuration);
             provider = FileFog.provider(Name);
             is_oauth = provider.getConfig().interfaces.indexOf("oauth") != -1;
+            console.log("before!")
             utils.loadCredentials()
                 .then(function (cred) {
+                    console.log("load credentials", cred)
+
                     if (is_oauth) {
+                        console.log("is oauth")
+
                         return provider.oAuthRefreshAccessToken(cred)
                             .then(function (new_cred) {
+                                    console.log("GOT refresh token",new_cred)
                                 return utils.saveCredentials(new_cred)
                                     .then(function () {
+                                        console.log("Saved credentails")
                                         return FileFog.client(Name, new_cred)
                                     })
                             })
@@ -26,6 +33,7 @@ describe('During Integration testing', function () {
                     }
                 })
                 .then(function (client) {
+                    console.log("then client",client)
                     authClient = client;
                 })
                 .fail(function(err){
@@ -70,10 +78,11 @@ describe('During Integration testing', function () {
                     .then(done,done)
             })
 
-            it('should successfully Delete file', function () {
+            it('should successfully Delete file', function (done) {
                 return authClient.deleteFile(testFileIdentifier).then(function (response) {
                     response.success.should.be.true;
                 })
+                    .then(done, done)
             })
         })
 
@@ -83,8 +92,8 @@ describe('During Integration testing', function () {
             before(function () {
                 testFolderName = 'folder_'+utils.guid() + '_test'
             })
-            describe('when no identifiers provided', function(done){
-                it('should successfully get root folder information', function () {
+            describe('when no identifiers provided', function(){
+                it('should successfully get root folder information', function (done) {
                     authClient.getFolderInformation()
                         .then(function (response) {
                             response.is_folder.should.be.true;
@@ -126,6 +135,7 @@ describe('During Integration testing', function () {
                     .then(done,done)
             })
 
+
             it('should successfully Delete folder', function (done) {
                 authClient.deleteFolder(testFolderIdentifier).then(function (response) {
                     response.success.should.be.true;
@@ -135,9 +145,81 @@ describe('During Integration testing', function () {
 
         })
 
-        describe('account methods', function (done) {
+        describe('subfolder methods', function(){
 
-            it('should access account info', function () {
+            var testlvl1FolderName = null;
+            var testlvl1FolderIdentifier;
+
+            var testlvl2FolderName = null;
+            var testlvl2FolderIdentifier;
+
+            var testFileName = null;
+            var testFileContent = "this is test content";
+            var testFileIdentifier = null;
+
+            before(function () {
+                testFileName = 'file_'+utils.guid() + '_test.txt'
+                testlvl1FolderName = 'lvl1_folder_'+utils.guid() + '_test'
+                testlvl2FolderName = 'lvl2_folder_'+utils.guid() + '_test'
+            })
+
+            it('should successfully Create lvl1 folder in root directory', function (done) {
+                authClient.createFolder(testlvl1FolderName).then(function (response) {
+                    response.name.should.be.eql(testlvl1FolderName);
+                    response.identifier.should.be.a.String;
+                    testlvl1FolderIdentifier = response.identifier;
+                })
+                    .then(done,done)
+            })
+
+            it('should successfully Create file in lvl1 folder, and return basic file properties.', function (done) {
+                authClient.createFile(testFileName, testlvl1FolderIdentifier, new Buffer(testFileContent))
+                    .then(function (response) {
+                        response.name.should.be.a.String
+                        response.identifier.should.be.a.String
+                        response.parent_identifier.should.eql(testlvl1FolderIdentifier);
+                        testFileIdentifier = response.identifier;
+                    })
+                    .then(done, done)
+            })
+
+            it('should successfully Delete file in lvl1 folder', function (done) {
+                return authClient.deleteFile(testFileIdentifier).then(function (response) {
+                    response.success.should.be.true;
+                })
+                    .then(done, done)
+            })
+
+            it('should successfully Create lvl2 folder in lvl1 directory', function (done) {
+                authClient.createFolder(testlvl2FolderName,testlvl1FolderIdentifier).then(function (response) {
+                    response.name.should.be.eql(testlvl2FolderName);
+                    response.identifier.should.be.a.String;
+                    response.parent_identifier.should.eql(testlvl1FolderIdentifier);
+                    testlvl2FolderIdentifier = response.identifier;
+                })
+                    .then(done,done)
+            })
+
+            it('should successfully Delete folder in lvl1 folder', function (done) {
+                return authClient.deleteFolder(testlvl2FolderIdentifier).then(function (response) {
+                    response.success.should.be.true;
+                })
+                    .then(done, done)
+            })
+
+            it('should successfully Delete lvl1 folder', function (done) {
+                return authClient.deleteFolder(testlvl1FolderIdentifier).then(function (response) {
+                    response.success.should.be.true;
+                })
+                    .then(done, done)
+            })
+
+        })
+
+
+        describe('account methods', function () {
+
+            it('should access account info', function (done) {
                 authClient.accountInfo().then(function (response) {
                     response.should.be.an.Object;
 
