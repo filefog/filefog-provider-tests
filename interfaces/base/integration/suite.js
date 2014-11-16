@@ -70,13 +70,154 @@ describe('During Integration testing', function () {
                     .then(done,done)
             })
 
+            var updatedFileContent = "this is updated test content";
+
+            it('should successfully Update file contents', function(done){
+                authClient.updateFile(testFileIdentifier, new Buffer(updatedFileContent)).then(function (response) {
+                    response.name.should.be.a.String
+                    response.identifier.should.be.a.String
+                    testFileIdentifier.should.eql(response.identifier)
+                })
+                    .then(done,done)
+            })
+
+            it('should successfully Read updated file contents', function(done){
+                authClient.downloadFile(testFileIdentifier).then(function (response) {
+                    response.data.toString().should.eql(updatedFileContent);
+                    response.headers.should.be.Object
+                })
+                    .then(done,done)
+            })
+
             it('should successfully Delete file', function (done) {
                 return authClient.deleteFile(testFileIdentifier).then(function (response) {
                     response.success.should.be.true;
                 })
                     .then(done, done)
             })
+
+
+
+            describe('when attempting to rename file', function () {
+                var testFileName = null;
+                var renamedTestFileName = null;
+                var testFileContent = "this is test content";
+                var testFileIdentifier = null;
+
+                before(function () {
+                    testFileName = 'file_'+utils.guid() + '_test.txt';
+                    renamedTestFileName = 'renamedfile_'+utils.guid() + '_test.txt'
+
+                })
+
+                it('should successfully Create file in root directory, and return basic file properties.', function (done) {
+                    authClient.createFile(testFileName, null, new Buffer(testFileContent))
+                        .then(function (response) {
+                            response.name.should.be.a.String
+                            response.identifier.should.be.a.String
+                            testFileIdentifier = response.identifier;
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Update file title in metadata', function (done) {
+                    authClient.updateFileInformation(testFileIdentifier, renamedTestFileName)
+                        .then(function (response) {
+                            response.name.should.be.eql(renamedTestFileName)
+                            response.is_file.should.be.true;
+                            response.identifier.should.be.a.String
+                            testFileIdentifier = response.identifier;
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Read file metadata', function (done) {
+                    authClient.getFileInformation(testFileIdentifier)
+                        .then(function (response) {
+                            response.name.should.be.eql(renamedTestFileName)
+                            response.is_file.should.be.true;
+                            response.identifier.should.be.a.String
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Delete file', function (done) {
+                    return authClient.deleteFile(testFileIdentifier).then(function (response) {
+                        response.success.should.be.true;
+                    })
+                        .then(done, done)
+                })
+
+            })
+
+            describe('when attempting to move file (change parent)', function () {
+                var testFileName = null;
+                var testFileContent = "this is test content";
+                var testFileIdentifier = null;
+
+                var testParentFolderName = null;
+                var testParentFolderIdentifier = null;
+
+
+                before(function () {
+                    testFileName = 'file_'+utils.guid() + '_test.txt';
+                    testParentFolderName = 'parent_folder_'+utils.guid() + '_test'
+                })
+
+                it('should successfully Create file in root directory, and return basic file properties.', function (done) {
+                    authClient.createFile(testFileName, null, new Buffer(testFileContent))
+                        .then(function (response) {
+                            response.name.should.be.a.String
+                            response.identifier.should.be.a.String
+                            testFileIdentifier = response.identifier;
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Create lvl1 folder in root directory', function (done) {
+                    authClient.createFolder(testParentFolderName).then(function (response) {
+                        response.name.should.be.eql(testParentFolderName);
+                        response.identifier.should.be.a.String;
+                        testParentFolderIdentifier = response.identifier;
+                    })
+                        .then(done,done)
+                })
+
+
+                it('should successfully Update file parent in metadata', function (done) {
+                    authClient.updateFileInformation(testFileIdentifier, null, testParentFolderIdentifier)
+                        .then(function (response) {
+                            response.name.should.be.eql(testFileName)
+                            response.is_file.should.be.true;
+                            response.identifier.should.be.a.String
+                            response.parent_identifier.should.eql(testParentFolderIdentifier);
+                            testFileIdentifier = response.identifier;
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Read file metadata', function (done) {
+                    authClient.getFileInformation(testFileIdentifier)
+                        .then(function (response) {
+                            response.name.should.be.eql(testFileName)
+                            response.is_file.should.be.true;
+                            response.identifier.should.be.a.String
+                            response.parent_identifier.should.eql(testParentFolderIdentifier);
+                        })
+                        .then(done, done)
+                })
+
+                it('should successfully Delete file', function (done) {
+                    return authClient.deleteFile(testFileIdentifier).then(function (response) {
+                        response.success.should.be.true;
+                    })
+                        .then(done, done)
+                })
+
+            })
         })
+
+
 
         describe('folder methods', function () {
             var testFolderName = null;

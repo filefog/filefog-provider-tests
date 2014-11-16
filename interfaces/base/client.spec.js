@@ -42,6 +42,10 @@ describe('Client Definition', function() {
             clientConstructor.prototype.createFile.should.be.a.Function;
         });
 
+        it('should have a updateFile method', function(){
+            clientConstructor.prototype.updateFile.should.be.a.Function;
+        })
+
         it('should have a deleteFile method', function() {
             clientConstructor.prototype.deleteFile.should.be.a.Function;
         });
@@ -53,6 +57,10 @@ describe('Client Definition', function() {
         it('should have a getFileInformation method', function() {
             clientConstructor.prototype.getFileInformation.should.be.a.Function;
         });
+
+        it('should have a updateFileInformation method', function(){
+            clientConstructor.prototype.updateFileInformation.should.be.a.Function;
+        })
 
         it('should have a createFolder method', function() {
             clientConstructor.prototype.createFolder.should.be.a.Function;

@@ -26,6 +26,10 @@ describe('Transform Definition', function() {
             transform.createFile.should.be.a.Function;
         });
 
+        it('should have a createFile method', function() {
+            transform.updateFile.should.be.a.Function;
+        });
+
         it('should have a deleteFile method', function() {
             transform.deleteFile.should.be.a.Function;
         });
@@ -36,6 +40,10 @@ describe('Transform Definition', function() {
 
         it('should have a getFileInformation method', function() {
             transform.getFileInformation.should.be.a.Function;
+        });
+
+        it('should have a updateFileInformation method', function() {
+            transform.updateFileInformation.should.be.a.Function;
         });
 
         it('should have a createFolder method', function() {
