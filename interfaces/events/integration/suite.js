@@ -8,7 +8,7 @@ describe('During Integration testing', function () {
         var authClient;
         before(function (done) {
             //FileFog.use(Name, Definition, Configuration); //this should already have been registered in the base call
-            provider = FileFog.provider(Name);
+            provider = FileFog.provider(Name,FilefogOptions);
             is_oauth = provider.getConfig().interfaces.indexOf("oauth") != -1;
             utils.loadCredentials()
                 .then(function (cred) {
@@ -17,12 +17,12 @@ describe('During Integration testing', function () {
                             .then(function (new_cred) {
                                 return utils.saveCredentials(new_cred)
                                     .then(function () {
-                                        return FileFog.client(Name, new_cred)
+                                        return FileFog.client(Name, new_cred,FilefogOptions)
                                     })
                             })
                     }
                     else {
-                        return FileFog.client(Name, cred);
+                        return FileFog.client(Name, cred,FilefogOptions);
                     }
                 })
                 .then(function (client) {

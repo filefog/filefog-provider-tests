@@ -14,7 +14,7 @@ function configure(options){
     this.definition = options.definition;
     this.config = options.config || {};
     this.credentials = options.credentials || {};
-
+    this.filefog_options = options.filefog_options || {};
 
 
     // Globalize Adapter
@@ -22,6 +22,7 @@ function configure(options){
     global.Definition = this.definition;
     global.Configuration = this.config;
     global.Credentials = this.credentials;
+    global.FilefogOptions = this.filefog_options;
 
     if(options.definition.config && options.definition.config.interfaces)
     {
