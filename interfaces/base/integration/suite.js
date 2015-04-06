@@ -213,7 +213,12 @@ describe('During Integration testing', function () {
                     })
                         .then(done, done)
                 })
-
+                it('should successfully Delete folder', function (done) {
+                    authClient.deleteFolder(testParentFolderIdentifier).then(function (response) {
+                        response.success.should.be.true;
+                    })
+                        .then(done,done)
+                })
             })
         })
 
