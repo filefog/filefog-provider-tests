@@ -1,6 +1,5 @@
 var fs = require('fs'),
     Path = require('path'),
-    request = require('request'),
     q = require('q')
 
 /**
@@ -39,21 +38,6 @@ exports.fileLookup = function fileLookup(path, filter, recursive) {
   return files;
 };
 
-/**
- * Description
- * @method generateOptions
- * @return ObjectExpression
- */
-function generateOptions(){
-    return {
-        url: 'https://api.github.com/gists/' + Credentials._gist,
-        headers: {
-            'Accept': 'application/vnd.github.v3+json',
-            'User-Agent': 'analogj',
-            "Authorization" : "token " + process.env.GITHUB_ACCESS_TOKEN
-        }
-    };
-}
 
 /**
  * Description
@@ -65,22 +49,19 @@ exports.loadCredentials = function(){
     if(Credentials == null){
         return q({});
     }
-    else if(!Credentials._gist){
+    else if(!Credentials._file){
         return q(Credentials);
     }
     else{
-        if(!process.env.GITHUB_ACCESS_TOKEN){
-            return q.reject(new Error("GITHUB_ACCESS_TOKEN not specified. An access token is required to access credentials stored in a gist."))
-        }
-        var deferred = q.defer();
-        var options = generateOptions();
-        request.get(options, function(err, req, body){
-            if (err) return deferred.reject(err);
-            var data = JSON.parse(body);
-            var cred = JSON.parse(data.files[Name].content);
-            return deferred.resolve(cred);
-        });
-        return deferred.promise;
+        //we have to load the credentials from the filesystem.
+
+        return q.nfcall(fs.readFile, Path.resolve(Credentials._file,'live.json'), "utf-8")
+            .fail(function(err){
+                return q.nfcall(fs.readFile, Path.resolve(Credentials._file,'example.json'), "utf-8")
+            })
+            .then(function(data){
+                return JSON.parse(data)
+            })
     }
 }
 
@@ -95,44 +76,10 @@ exports.saveCredentials = function(credentials){
     if(Credentials == null){
         return q(null);
     }
-    else if(!Credentials._gist){
+    else if(!Credentials._file){
         return q(Credentials);
     }
     else{
-        if(!process.env.GITHUB_ACCESS_TOKEN){
-            return q.reject(new Error("GITHUB_ACCESS_TOKEN not specified. An access token is required to access credentials stored in a gist."))
-        }
-        var deferred = q.defer();
-        var options = generateOptions();
-        var body = {"files":{}};
-        body.files[Name] = {"content" : JSON.stringify(credentials)};
-        options.body = JSON.stringify(body);
-        request.patch(options, function(err, req, body){
-            if (err) return deferred.reject(err);
-            return deferred.resolve();
-        });
-        return deferred.promise;
+        return q.nfcall(fs.writeFile, Path.resolve(Credentials._file,'live.json'), JSON.stringify(credentials))
     }
 }
-
-
-/**
- * Description
- * @method s4
- * @return CallExpression
- */
-function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-}
-
-/**
- * Description
- * @method guid
- * @return BinaryExpression
- */
-exports.guid = function () {
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-};

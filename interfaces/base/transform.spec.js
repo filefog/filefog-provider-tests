@@ -26,7 +26,7 @@ describe('Transform Definition', function() {
             transform.createFile.should.be.a.Function;
         });
 
-        it('should have a createFile method', function() {
+        it('should have a updateFile method', function() {
             transform.updateFile.should.be.a.Function;
         });
 

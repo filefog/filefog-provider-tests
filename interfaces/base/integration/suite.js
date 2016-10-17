@@ -40,7 +40,7 @@ describe('During Integration testing', function () {
             var testFileContent = "this is test content";
             var testFileIdentifier = null;
             before(function () {
-                testFileName = 'file_'+utils.guid() + '_test.txt'
+                testFileName = 'file_c69b0f04-3826-465b-a491-527a1a4abc95_test.txt'
             })
             it('should successfully Create file in root directory, and return basic file properties.', function (done) {
                 authClient.createFile(testFileName, null, new Buffer(testFileContent))
@@ -105,8 +105,8 @@ describe('During Integration testing', function () {
                 var testFileIdentifier = null;
 
                 before(function () {
-                    testFileName = 'file_'+utils.guid() + '_test.txt';
-                    renamedTestFileName = 'renamedfile_'+utils.guid() + '_test.txt'
+                    testFileName = 'file_f4200603-bd2d-4702-82e8-8714e679eaa5_test.txt';
+                    renamedTestFileName = 'renamedfile_db93757d-9d77-4a26-83b4-408e23df0a13_test.txt'
 
                 })
 
@@ -160,8 +160,8 @@ describe('During Integration testing', function () {
 
 
                 before(function () {
-                    testFileName = 'file_'+utils.guid() + '_test.txt';
-                    testParentFolderName = 'parent_folder_'+utils.guid() + '_test'
+                    testFileName = 'file_897d151f-056c-4dc7-844a-f77a17ea26cd_test.txt';
+                    testParentFolderName = 'parent_folder_f527c704-b863-4cca-94db-d72967d973aa_test'
                 })
 
                 it('should successfully Create file in root directory, and return basic file properties.', function (done) {
@@ -228,7 +228,7 @@ describe('During Integration testing', function () {
             var testFolderName = null;
             var testFolderIdentifier;
             before(function () {
-                testFolderName = 'folder_'+utils.guid() + '_test'
+                testFolderName = 'folder_c85d6ef5-b49c-47e9-9bfe-7120f040de12_test'
             })
             describe('when no identifiers provided', function(){
                 it('should successfully get root folder information', function (done) {
@@ -296,9 +296,9 @@ describe('During Integration testing', function () {
             var testFileIdentifier = null;
 
             before(function () {
-                testFileName = 'file_'+utils.guid() + '_test.txt'
-                testlvl1FolderName = 'lvl1_folder_'+utils.guid() + '_test'
-                testlvl2FolderName = 'lvl2_folder_'+utils.guid() + '_test'
+                testFileName = 'file_85defe30-9a6a-42b0-9174-3ed877abf930_test.txt'
+                testlvl1FolderName = 'lvl1_folder_25238ae6-977e-4d9e-a1f8-dc127e623331_test'
+                testlvl2FolderName = 'lvl2_folder_6fa12765-b347-405d-bcf7-dbabb3bdaf21_test'
             })
 
             it('should successfully Create lvl1 folder in root directory', function (done) {

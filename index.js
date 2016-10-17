@@ -15,6 +15,7 @@ function configure(options){
     this.config = options.config || {};
     this.credentials = options.credentials || {};
     this.filefog_options = options.filefog_options || {};
+    this.fixtures_path = options.fixtures_path || '/tmp/fixtures';
 
 
     // Globalize Adapter
@@ -23,6 +24,7 @@ function configure(options){
     global.Configuration = this.config;
     global.Credentials = this.credentials;
     global.FilefogOptions = this.filefog_options;
+    global.FixturesPath = this.fixtures_path;
 
     if(options.definition.config && options.definition.config.interfaces)
     {
@@ -46,7 +48,7 @@ module.exports.TestRunner = function(options) {
     // Build an array of files to test
     var filter = '\\.(' + ['js'].join('|') + ')$';
 
-    var files = [];
+    var files = [Path.resolve(__dirname,'./helper.js')];
 
     var interfacePath = Path.resolve(__dirname,'./interfaces/base');
     files = files.concat(utils.fileLookup(interfacePath, filter, true));

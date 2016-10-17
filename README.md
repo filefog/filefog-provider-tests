@@ -60,3 +60,11 @@ $ node runner.js
 ## MIT License
 
 See LICENSE.md.
+
+
+## TODO:
+
+- fix the test runner vcr filters so they come from the providers them selves.
+- add ability to generate credentials.json file in provider on demand.
+- DROPBOX SDK version should be changed to use the latest public, rather than my fork. 
+- determine if there is a way to only generate VCR recording when a test needs it (using a tag or some sort)
